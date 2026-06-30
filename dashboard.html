@@ -17,25 +17,21 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        .dropdown-menu {
-            display: none;
-        }
-        .dropdown-menu.show {
-            display: block;
-        }
-        /* Prevent zoom on input focus for iOS */
-        input, select, textarea {
-            font-size: 16px;
-        }
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+        .dropdown-menu { display: none; }
+        .dropdown-menu.show { display: block; }
+        input, select, textarea { font-size: 16px; }
+        html { scroll-behavior: smooth; }
+        
+        /* Ensure TradingView widget fills its container perfectly */
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 100% !important;
         }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col pb-20">
+<body class="antialiased min-h-screen flex flex-col pb-24">
 
-    <!-- Header - Compact for Mobile -->
+    <!-- Header -->
     <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex justify-between items-center sticky top-0 z-40">
         <a href="index.html" class="flex items-center gap-2">
             <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center font-bold text-slate-900 text-sm">S</div>
@@ -59,36 +55,21 @@
                     </svg>
                 </button>
                 
-                <!-- Dropdown Content - Full width on mobile -->
                 <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl z-50 max-h-[70vh] overflow-y-auto">
                     <div class="px-4 py-3 border-b border-slate-700">
                         <p class="text-xs text-slate-400">Signed in as</p>
                         <p id="userEmail" class="text-sm font-medium text-white truncate">user@example.com</p>
                     </div>
                     <div class="py-2">
-                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition active:bg-slate-600">
-                            👤 Profile
-                        </a>
-                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition active:bg-slate-600">
-                            🤖 Trading Bots
-                        </a>
-                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition active:bg-slate-600">
-                            📊 Investment Plans
-                        </a>
-                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition active:bg-slate-600">
-                            💵 Deposit
-                        </a>
-                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition active:bg-slate-600">
-                            💸 Withdraw
-                        </a>
-                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition active:bg-slate-600">
-                            📄 Transactions
-                        </a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 active:bg-slate-600">👤 Profile</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 active:bg-slate-600">🤖 Trading Bots</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 active:bg-slate-600">📊 Investment Plans</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 active:bg-slate-600">💵 Deposit</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 active:bg-slate-600">💸 Withdraw</a>
+                        <a href="#" class="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 active:bg-slate-600">📄 Transactions</a>
                     </div>
                     <div class="border-t border-slate-700 py-2">
-                        <button onclick="handleLogout()" class="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-slate-700 transition active:bg-slate-600">
-                            🚪 Logout
-                        </button>
+                        <button onclick="handleLogout()" class="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-slate-700 active:bg-slate-600"> Logout</button>
                     </div>
                 </div>
             </div>
@@ -98,8 +79,8 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col p-3 gap-3 max-w-[1600px] mx-auto w-full">
         
-        <!-- Chart - BIGGER for Mobile (takes full width, taller) -->
-        <div class="w-full bg-slate-900 rounded-xl border border-slate-800 p-2" style="min-height: 400px; height: 45vh;">
+        <!-- Chart - Fully Interactive & Responsive -->
+        <div class="w-full bg-slate-900 rounded-xl border border-slate-800 overflow-hidden" style="height: 50vh; min-height: 350px;">
             <div class="tradingview-widget-container" style="height:100%;width:100%">
                 <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
@@ -113,28 +94,29 @@
                     "locale": "en",
                     "enable_publishing": false,
                     "allow_symbol_change": true,
-                    "hide_side_toolbar": false
+                    "hide_side_toolbar": false,
+                    "studies": ["RSI@tv-basicstudies", "MASimple@tv-basicstudies"]
                 }
                 </script>
             </div>
         </div>
 
-        <!-- Trade Panel - Mobile Optimized -->
+        <!-- Trade Panel -->
         <div class="w-full bg-slate-900 rounded-xl border border-slate-800 p-4 flex flex-col gap-4">
-            <h3 class="text-lg font-bold text-center">Quick Trade</h3>
+            <h3 class="text-lg font-bold text-center">Place Trade</h3>
             
             <!-- Asset -->
             <div>
                 <label class="text-xs text-slate-400 uppercase font-semibold">Asset</label>
-                <div class="mt-2 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white font-semibold flex justify-between items-center active:scale-[0.98] transition">
+                <div class="mt-2 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white font-semibold flex justify-between items-center">
                     <span class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-green-500"></span> EUR/USD
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> BTC/USDT
                     </span>
-                    <span class="text-green-400 text-sm font-bold bg-green-500/10 px-2 py-1 rounded">85%</span>
+                    <span class="text-green-400 text-sm font-bold bg-green-500/10 px-2 py-1 rounded">85% Payout</span>
                 </div>
             </div>
 
-            <!-- Time - Bigger buttons for touch -->
+            <!-- Time -->
             <div>
                 <label class="text-xs text-slate-400 uppercase font-semibold">Expiration Time</label>
                 <div class="mt-2 grid grid-cols-3 gap-3">
@@ -144,7 +126,7 @@
                 </div>
             </div>
 
-            <!-- Amount - Bigger controls -->
+            <!-- Amount -->
             <div>
                 <label class="text-xs text-slate-400 uppercase font-semibold">Trade Amount ($)</label>
                 <div class="mt-2 flex items-center bg-slate-800 border-2 border-slate-700 rounded-xl overflow-hidden">
@@ -152,7 +134,6 @@
                     <input type="number" id="tradeAmount" value="100" class="flex-1 bg-transparent text-center text-white font-bold text-2xl focus:outline-none border-x-2 border-slate-700 py-4">
                     <button onclick="changeAmount(10)" class="px-5 py-4 text-white hover:bg-slate-700 active:bg-slate-600 text-2xl font-bold transition w-16">+</button>
                 </div>
-                <!-- Quick amounts -->
                 <div class="mt-2 flex gap-2">
                     <button onclick="setAmount(10)" class="flex-1 bg-slate-800 py-2 rounded-lg text-xs text-slate-300 active:bg-slate-700">$10</button>
                     <button onclick="setAmount(50)" class="flex-1 bg-slate-800 py-2 rounded-lg text-xs text-slate-300 active:bg-slate-700">$50</button>
@@ -161,21 +142,21 @@
                 </div>
             </div>
 
-            <!-- Trade Buttons - BIG and easy to tap -->
+            <!-- BUY / SELL Buttons -->
             <div class="grid grid-cols-2 gap-3 pt-2">
-                <button onclick="executeTrade('UP')" class="py-5 bg-gradient-to-b from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 active:scale-95 text-white font-bold text-xl rounded-xl shadow-lg shadow-green-500/30 transition flex flex-col items-center justify-center">
+                <button onclick="executeTrade('BUY')" class="py-5 bg-gradient-to-b from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 active:scale-95 text-white font-bold text-xl rounded-xl shadow-lg shadow-green-500/30 transition flex flex-col items-center justify-center">
                     <span class="text-3xl mb-1">▲</span>
-                    <span>CALL / UP</span>
+                    <span>BUY</span>
                 </button>
-                <button onclick="executeTrade('DOWN')" class="py-5 bg-gradient-to-b from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 active:scale-95 text-white font-bold text-xl rounded-xl shadow-lg shadow-red-500/30 transition flex flex-col items-center justify-center">
+                <button onclick="executeTrade('SELL')" class="py-5 bg-gradient-to-b from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 active:scale-95 text-white font-bold text-xl rounded-xl shadow-lg shadow-red-500/30 transition flex flex-col items-center justify-center">
                     <span class="text-3xl mb-1">▼</span>
-                    <span>PUT / DOWN</span>
+                    <span>SELL</span>
                 </button>
             </div>
         </div>
     </main>
 
-    <!-- Trade History - Horizontal scroll on mobile -->
+    <!-- Trade History -->
     <section class="max-w-[1600px] mx-auto w-full px-4 pb-6">
         <h3 class="text-lg font-bold mb-3 px-1">Recent Trades</h3>
         <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-x-auto">
@@ -199,7 +180,7 @@
         </div>
     </section>
 
-    <!-- Bottom Navigation Bar - Mobile Only -->
+    <!-- Bottom Navigation Bar -->
     <nav class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-4 py-2 flex justify-around items-center z-40 md:hidden">
         <a href="#" class="flex flex-col items-center gap-1 text-green-400">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
@@ -282,7 +263,8 @@
                 return;
             }
 
-            const entryPrice = 1.0845;
+            // Simulated entry price (in a real app, fetch from API)
+            const entryPrice = 65000.00; 
 
             const newBalance = wallet.balance - amount;
             await supabaseClient
@@ -294,9 +276,9 @@
                 .from('trades')
                 .insert({
                     user_id: currentUser.id,
-                    asset: 'EUR/USD',
+                    asset: 'BTC/USDT',
                     amount: amount,
-                    direction: direction,
+                    direction: direction, // 'BUY' or 'SELL'
                     entry_price: entryPrice,
                     duration_seconds: selectedTime,
                     payout_percentage: 85.00,
@@ -312,16 +294,19 @@
             await fetchBalance();
             await loadTrades();
 
+            // Simulate trade completion after selected time
             setTimeout(() => completeTrade(direction, amount, entryPrice), selectedTime * 1000);
         }
 
         async function completeTrade(direction, amount, entryPrice) {
-            const priceChange = (Math.random() - 0.5) * 0.0010;
+            // Simulate price movement
+            const priceChange = (Math.random() - 0.5) * 100; // Random movement
             const exitPrice = entryPrice + priceChange;
             
             let won = false;
-            if (direction === 'UP' && exitPrice > entryPrice) won = true;
-            if (direction === 'DOWN' && exitPrice < entryPrice) won = true;
+            // BUY wins if price goes UP, SELL wins if price goes DOWN
+            if (direction === 'BUY' && exitPrice > entryPrice) won = true;
+            if (direction === 'SELL' && exitPrice < entryPrice) won = true;
 
             const profit = won ? amount * 0.85 : -amount;
             const status = won ? 'won' : 'lost';
@@ -377,7 +362,7 @@
                     <td class="px-4 py-3 text-xs">${new Date(trade.created_at).toLocaleTimeString()}</td>
                     <td class="px-4 py-3 text-xs">${trade.asset}</td>
                     <td class="px-4 py-3">
-                        <span class="px-2 py-1 rounded text-xs font-bold ${trade.direction === 'UP' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${trade.direction === 'BUY' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">
                             ${trade.direction}
                         </span>
                     </td>
@@ -414,7 +399,7 @@
 
         function showToast(message, type) {
             const toast = document.createElement('div');
-            toast.className = `fixed bottom-20 left-4 right-4 px-6 py-4 rounded-xl shadow-2xl text-white font-semibold z-[200] text-center ${
+            toast.className = `fixed bottom-24 left-4 right-4 px-6 py-4 rounded-xl shadow-2xl text-white font-semibold z-[200] text-center ${
                 type === 'success' ? 'bg-green-500' : 'bg-red-500'
             }`;
             toast.textContent = message;
