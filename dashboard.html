@@ -8,32 +8,35 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
-            background-color: #0f172a;
+            background-color: #0a0f1a;
             color: #f8fafc;
             font-family: 'Inter', system-ui, sans-serif;
         }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased min-h-screen flex flex-col">
 
-    <!-- Dashboard Header -->
+    <!-- Header -->
     <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex justify-between items-center sticky top-0 z-40">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+        <a href="index.html" class="flex items-center gap-2">
             <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center font-bold text-slate-900">S</div>
-            <span class="text-xl font-bold hidden sm:block">Summit<span class="text-green-400">FX</span></span>
-        </div>
+            <span class="text-xl font-bold">Summit<span class="text-green-400">FX</span></span>
+        </a>
         <div class="flex items-center gap-4">
             <div class="bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
                 <span class="text-slate-400 text-sm">Balance:</span>
                 <span id="userBalance" class="text-white font-bold ml-2">$0.00</span>
             </div>
-            <button onclick="handleLogout()" class="text-slate-400 hover:text-red-400 transition font-medium">Logout</button>
+            <button onclick="handleLogout()" class="text-slate-400 hover:text-red-400 transition">Logout</button>
         </div>
     </header>
 
-    <!-- Dashboard Main Content -->
-    <main class="flex-1 flex flex-col lg:flex-row p-4 gap-4 min-h-[calc(100vh-73px)]">
-        <!-- Chart Area -->
+    <main class="flex-1 flex flex-col lg:flex-row p-4 gap-4 max-w-[1600px] mx-auto w-full">
+        
+        <!-- Chart -->
         <div class="flex-1 bg-slate-900 rounded-xl border border-slate-800 p-2 min-h-[500px]">
             <div class="tradingview-widget-container" style="height:100%;width:100%">
                 <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
@@ -47,110 +50,249 @@
                     "style": "1",
                     "locale": "en",
                     "enable_publishing": false,
-                    "allow_symbol_change": true,
-                    "support_host": "https://www.tradingview.com"
+                    "allow_symbol_change": true
                 }
                 </script>
             </div>
         </div>
 
-        <!-- Trade Control Panel -->
+        <!-- Trade Panel -->
         <div class="w-full lg:w-80 bg-slate-900 rounded-xl border border-slate-800 p-6 flex flex-col gap-5">
             <h3 class="text-xl font-bold text-center">Quick Trade</h3>
             
-            <!-- Asset -->
             <div>
-                <label class="text-xs text-slate-400 uppercase font-semibold">Asset</label>
-                <div class="mt-1 bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white font-semibold flex justify-between">
-                    <span>EUR/USD</span>
-                    <span class="text-green-400 text-sm">Payout 85%</span>
+                <label class="text-xs text-slate-400 uppercase">Asset</label>
+                <div class="mt-2 bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white font-semibold">
+                    EUR/USD <span class="text-green-400 text-sm float-right">85%</span>
                 </div>
             </div>
 
-            <!-- Time -->
             <div>
-                <label class="text-xs text-slate-400 uppercase font-semibold">Expiration Time</label>
-                <div class="mt-1 grid grid-cols-3 gap-2">
-                    <button class="time-btn bg-slate-800 border border-slate-700 py-2 rounded-lg text-white hover:border-green-500 transition" data-time="60">1m</button>
-                    <button class="time-btn bg-green-500/20 border border-green-500 py-2 rounded-lg text-green-400 font-bold" data-time="300">5m</button>
-                    <button class="time-btn bg-slate-800 border border-slate-700 py-2 rounded-lg text-white hover:border-green-500 transition" data-time="900">15m</button>
+                <label class="text-xs text-slate-400 uppercase">Time</label>
+                <div class="mt-2 grid grid-cols-3 gap-2">
+                    <button class="time-btn bg-slate-800 border border-slate-700 py-2 rounded-lg text-white text-sm" data-time="60">1m</button>
+                    <button class="time-btn bg-green-500/20 border border-green-500 py-2 rounded-lg text-green-400 font-bold text-sm" data-time="300">5m</button>
+                    <button class="time-btn bg-slate-800 border border-slate-700 py-2 rounded-lg text-white text-sm" data-time="900">15m</button>
                 </div>
             </div>
 
-            <!-- Amount -->
             <div>
-                <label class="text-xs text-slate-400 uppercase font-semibold">Trade Amount ($)</label>
-                <div class="mt-1 flex items-center bg-slate-800 border border-slate-700 rounded-lg overflow-hidden">
-                    <button onclick="changeAmount(-10)" class="px-4 py-3 text-white hover:bg-slate-700 text-xl font-bold transition">-</button>
+                <label class="text-xs text-slate-400 uppercase">Amount ($)</label>
+                <div class="mt-2 flex items-center bg-slate-800 border border-slate-700 rounded-lg">
+                    <button onclick="changeAmount(-10)" class="px-4 py-3 text-white hover:bg-slate-700 font-bold">-</button>
                     <input type="number" id="tradeAmount" value="100" class="flex-1 bg-transparent text-center text-white font-bold text-lg focus:outline-none">
-                    <button onclick="changeAmount(10)" class="px-4 py-3 text-white hover:bg-slate-700 text-xl font-bold transition">+</button>
+                    <button onclick="changeAmount(10)" class="px-4 py-3 text-white hover:bg-slate-700 font-bold">+</button>
                 </div>
             </div>
 
-            <!-- Trade Buttons -->
             <div class="mt-auto grid grid-cols-2 gap-3 pt-4">
-                <button onclick="executeTrade('UP')" class="py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-green-500/20 transition">
+                <button onclick="executeTrade('UP')" class="py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-xl transition">
                     ▲ UP
                 </button>
-                <button onclick="executeTrade('DOWN')" class="py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-red-500/20 transition">
+                <button onclick="executeTrade('DOWN')" class="py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-lg rounded-xl transition">
                     ▼ DOWN
                 </button>
             </div>
         </div>
     </main>
 
-    <!-- JAVASCRIPT -->
+    <!-- Trade History Section -->
+    <section class="max-w-[1600px] mx-auto w-full px-4 pb-8">
+        <h3 class="text-2xl font-bold mb-4">Recent Trades</h3>
+        <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-800 text-slate-400 text-sm uppercase">
+                    <tr>
+                        <th class="px-6 py-3">Time</th>
+                        <th class="px-6 py-3">Asset</th>
+                        <th class="px-6 py-3">Type</th>
+                        <th class="px-6 py-3">Amount</th>
+                        <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3">Profit/Loss</th>
+                    </tr>
+                </thead>
+                <tbody id="tradesTable" class="divide-y divide-slate-800">
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center text-slate-500">Loading trades...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <script>
         const SUPABASE_URL = 'https://lrfufnpfehdizzwvausy.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxyZnVmbnBmZWhkaXp6d3ZhdXN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MDAzNzksImV4cCI6MjA5ODM3NjM3OX0.UafAmnWeqkvWZQSGfQYnjYLkbtROVKj9yhLR4wPG5mI';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let currentUser = null;
+        let selectedTime = 300; // 5 minutes default
 
-        // Check if user is logged in on page load
         async function checkAuth() {
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) {
-                window.location.href = 'index.html';
+                window.location.href = 'signin.html';
             } else {
-                fetchBalance(session.user.id);
+                currentUser = session.user;
+                await fetchBalance();
+                await loadTrades();
             }
         }
 
-        // Fetch user's wallet balance
-        async function fetchBalance(userId) {
-            try {
-                const { data, error } = await supabaseClient
+        async function fetchBalance() {
+            const { data } = await supabaseClient
+                .from('wallets')
+                .select('balance')
+                .eq('id', currentUser.id)
+                .single();
+            
+            if (data) {
+                document.getElementById('userBalance').textContent = 
+                    `$${parseFloat(data.balance).toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            }
+        }
+
+        async function executeTrade(direction) {
+            const amount = parseFloat(document.getElementById('tradeAmount').value);
+            
+            // Get current balance
+            const { data: wallet } = await supabaseClient
+                .from('wallets')
+                .select('balance')
+                .eq('id', currentUser.id)
+                .single();
+
+            if (amount > wallet.balance) {
+                showToast('Insufficient balance!', 'error');
+                return;
+            }
+
+            // Get current price (simulated - in production, get from API)
+            const entryPrice = 1.0845; // EUR/USD example price
+
+            // Deduct balance
+            const newBalance = wallet.balance - amount;
+            await supabaseClient
+                .from('wallets')
+                .update({ balance: newBalance })
+                .eq('id', currentUser.id);
+
+            // Save trade to database
+            const { error } = await supabaseClient
+                .from('trades')
+                .insert({
+                    user_id: currentUser.id,
+                    asset: 'EUR/USD',
+                    amount: amount,
+                    direction: direction,
+                    entry_price: entryPrice,
+                    duration_seconds: selectedTime,
+                    payout_percentage: 85.00,
+                    status: 'pending'
+                });
+
+            if (error) {
+                showToast('Error placing trade', 'error');
+                return;
+            }
+
+            showToast(`Trade placed: ${direction} $${amount}`, 'success');
+            await fetchBalance();
+            await loadTrades();
+
+            // Simulate trade completion after duration
+            setTimeout(() => completeTrade(direction, amount, entryPrice), selectedTime * 1000);
+        }
+
+        async function completeTrade(direction, amount, entryPrice) {
+            // Simulate exit price (random movement)
+            const priceChange = (Math.random() - 0.5) * 0.0010;
+            const exitPrice = entryPrice + priceChange;
+            
+            // Determine win/loss
+            let won = false;
+            if (direction === 'UP' && exitPrice > entryPrice) won = true;
+            if (direction === 'DOWN' && exitPrice < entryPrice) won = true;
+
+            const profit = won ? amount * 0.85 : -amount;
+            const status = won ? 'won' : 'lost';
+
+            // Update trade in database
+            await supabaseClient
+                .from('trades')
+                .update({
+                    exit_price: exitPrice,
+                    status: status,
+                    profit: profit,
+                    completed_at: new Date().toISOString()
+                })
+                .eq('user_id', currentUser.id)
+                .eq('status', 'pending')
+                .order('created_at', { ascending: false })
+                .limit(1);
+
+            // Add profit to balance if won
+            if (won) {
+                const { data: wallet } = await supabaseClient
                     .from('wallets')
                     .select('balance')
-                    .eq('id', userId)
+                    .eq('id', currentUser.id)
                     .single();
-
-                if (error) throw error;
                 
-                if (data) {
-                    const formatted = parseFloat(data.balance).toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    });
-                    document.getElementById('userBalance').textContent = `$${formatted}`;
-                }
-            } catch (error) {
-                console.error('Error fetching balance:', error);
-                showToast('Error loading balance', 'error');
+                await supabaseClient
+                    .from('wallets')
+                    .update({ balance: wallet.balance + profit })
+                    .eq('id', currentUser.id);
             }
+
+            await fetchBalance();
+            await loadTrades();
+            showToast(won ? `Trade WON! +$${profit.toFixed(2)}` : `Trade LOST! -$${amount}`, won ? 'success' : 'error');
         }
 
-        // Handle logout
-        async function handleLogout() {
-            try {
-                await supabaseClient.auth.signOut();
-                window.location.href = 'index.html';
-            } catch (error) {
-                console.error('Error logging out:', error);
-                showToast('Error logging out', 'error');
+        async function loadTrades() {
+            const { data } = await supabaseClient
+                .from('trades')
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .order('created_at', { ascending: false })
+                .limit(10);
+
+            const tbody = document.getElementById('tradesTable');
+            
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">No trades yet</td></tr>';
+                return;
             }
+
+            tbody.innerHTML = data.map(trade => `
+                <tr class="hover:bg-slate-800/50">
+                    <td class="px-6 py-4 text-sm">${new Date(trade.created_at).toLocaleString()}</td>
+                    <td class="px-6 py-4 text-sm">${trade.asset}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${trade.direction === 'UP' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">
+                            ${trade.direction}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm">$${parseFloat(trade.amount).toFixed(2)}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${
+                            trade.status === 'won' ? 'bg-green-500/20 text-green-400' : 
+                            trade.status === 'lost' ? 'bg-red-500/20 text-red-400' : 
+                            'bg-yellow-500/20 text-yellow-400'
+                        }">
+                            ${trade.status.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold ${
+                        trade.profit > 0 ? 'text-green-400' : trade.profit < 0 ? 'text-red-400' : 'text-slate-400'
+                    }">
+                        ${trade.profit ? (trade.profit > 0 ? '+' : '') + '$' + parseFloat(trade.profit).toFixed(2) : '-'}
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        // Change trade amount
         function changeAmount(val) {
             const input = document.getElementById('tradeAmount');
             let current = parseInt(input.value) || 0;
@@ -159,53 +301,31 @@
             input.value = current;
         }
 
-        // Execute trade
-        function executeTrade(direction) {
-            const amount = parseFloat(document.getElementById('tradeAmount').value);
-            const balanceText = document.getElementById('userBalance').textContent.replace('$', '').replace(/,/g, '');
-            const balance = parseFloat(balanceText);
-
-            if (isNaN(amount) || amount <= 0) {
-                showToast('Please enter a valid amount', 'error');
-                return;
-            }
-
-            if (amount > balance) {
-                showToast('Insufficient balance!', 'error');
-                return;
-            }
-            
-            showToast(`Trade Executed: ${direction} for $${amount}!`, 'success');
-        }
-
-        // Show toast notification
-        function showToast(message, type = 'success') {
+        function showToast(message, type) {
             const toast = document.createElement('div');
-            toast.className = `fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg text-white font-semibold z-[200] transition-all transform translate-y-10 opacity-0 ${
+            toast.className = `fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg text-white font-semibold z-[200] ${
                 type === 'success' ? 'bg-green-500' : 'bg-red-500'
             }`;
             toast.textContent = message;
             document.body.appendChild(toast);
-            
-            setTimeout(() => toast.classList.remove('translate-y-10', 'opacity-0'), 10);
-            
-            setTimeout(() => {
-                toast.classList.add('translate-y-10', 'opacity-0');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
+            setTimeout(() => toast.remove(), 3000);
         }
 
-        // Time button selection
         document.querySelectorAll('.time-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.time-btn').forEach(b => {
-                    b.className = 'time-btn bg-slate-800 border border-slate-700 py-2 rounded-lg text-white hover:border-green-500 transition';
+                    b.className = 'time-btn bg-slate-800 border border-slate-700 py-2 rounded-lg text-white text-sm';
                 });
-                btn.className = 'time-btn bg-green-500/20 border border-green-500 py-2 rounded-lg text-green-400 font-bold';
+                btn.className = 'time-btn bg-green-500/20 border border-green-500 py-2 rounded-lg text-green-400 font-bold text-sm';
+                selectedTime = parseInt(btn.dataset.time);
             });
         });
 
-        // Initialize dashboard
+        async function handleLogout() {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'index.html';
+        }
+
         checkAuth();
     </script>
 </body>
