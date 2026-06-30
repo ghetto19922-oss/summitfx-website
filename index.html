@@ -25,20 +25,15 @@
     <nav class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center font-bold text-slate-900">S</div>
                     <span class="text-xl font-bold tracking-tight">Summit<span class="text-sky-400">FX</span></span>
                 </div>
-                
-                <!-- Links (Hidden on mobile for simplicity) -->
                 <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
                     <a href="#" class="hover:text-white transition">Markets</a>
                     <a href="#" class="hover:text-white transition">Trading</a>
                     <a href="#" class="hover:text-white transition">About Us</a>
                 </div>
-
-                <!-- Auth Buttons -->
                 <div class="flex items-center gap-3">
                     <button class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition">Log In</button>
                     <button class="px-4 py-2 text-sm font-medium bg-sky-500 hover:bg-sky-600 text-white rounded-lg transition shadow-lg shadow-sky-500/20">Sign Up</button>
@@ -47,8 +42,32 @@
         </div>
     </nav>
 
+    <!-- LIVE MARKET TICKER (TradingView Widget) -->
+    <div class="border-b border-slate-800 bg-slate-900/30 overflow-hidden">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+                "symbols": [
+                    {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
+                    {"proName": "FOREXCOM:NSXUSD", "title": "US 100"},
+                    {"proName": "FX_IDC:EURUSD", "title": "EUR to USD"},
+                    {"proName": "BITSTAMP:BTCUSD", "title": "Bitcoin"},
+                    {"proName": "BITSTAMP:ETHUSD", "title": "Ethereum"},
+                    {"proName": "FX:GBPUSD", "title": "GBP to USD"}
+                ],
+                "showSymbolLogo": true,
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "displayMode": "adaptive",
+                "locale": "en"
+            }
+            </script>
+        </div>
+    </div>
+
     <!-- HERO SECTION -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32 text-center">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 text-center">
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
             Trade Smarter with <br>
             <span class="gradient-text">SummitFX Corporation</span>
@@ -56,7 +75,6 @@
         <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10">
             Experience next-generation automated options trading. Lightning-fast execution, secure deposits, and professional-grade tools at your fingertips.
         </p>
-        
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <button class="w-full sm:w-auto px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition shadow-lg shadow-sky-500/20">
                 Start Trading Now
@@ -66,7 +84,7 @@
             </button>
         </div>
 
-        <!-- Quick Stats (Like DexiMarket) -->
+        <!-- Quick Stats -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
                 <div class="text-3xl font-bold text-sky-400">< 1s</div>
@@ -83,7 +101,58 @@
         </div>
     </main>
 
-    <!-- Footer placeholder -->
+    <!-- LIVE TRADING CHART (TradingView Widget) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div class="bg-slate-800/30 rounded-2xl border border-slate-700 p-4 shadow-2xl">
+            <div class="tradingview-widget-container" style="height: 500px;">
+                <div class="tradingview-widget-container__widget" style="height: 100%; width: 100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "autosize": true,
+                    "symbol": "BINANCE:BTCUSDT",
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com"
+                }
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3-STEP PROCESS SECTION -->
+    <section class="py-20 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Start Trading in 3 Simple Steps</h2>
+            <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">Join thousands of traders worldwide. Getting started with SummitFX is fast, secure, and easy.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center hover:border-sky-500/50 transition">
+                    <div class="w-12 h-12 bg-sky-500/20 text-sky-400 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+                    <h3 class="text-xl font-semibold mb-2">Create Account</h3>
+                    <p class="text-slate-400">Sign up in seconds with just your email. No complex paperwork required.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center hover:border-sky-500/50 transition">
+                    <div class="w-12 h-12 bg-sky-500/20 text-sky-400 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+                    <h3 class="text-xl font-semibold mb-2">Fund Your Wallet</h3>
+                    <p class="text-slate-400">Deposit funds securely using your preferred payment method instantly.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center hover:border-sky-500/50 transition">
+                    <div class="w-12 h-12 bg-sky-500/20 text-sky-400 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+                    <h3 class="text-xl font-semibold mb-2">Execute Trades</h3>
+                    <p class="text-slate-400">Use our advanced tools to trade forex, crypto, and commodities with ease.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
         &copy; 2026 SummitFX Trading Corporation. All rights reserved.
     </footer>
